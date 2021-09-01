@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour {
         touchEndX = Input.GetTouch(0).position.x; // Marca o X final do dedo
         touchEndY = Input.GetTouch(0).position.y; // Marca o y final do dedo
 
-        if (Mathf.Abs(touchEndX - touchStartX) > 300) { // Verifica se a distância do deslize é maior que 300
+        if (Mathf.Abs(touchEndX - touchStartX) > 100) { // Verifica se a distância do deslize é maior que 300
           isNewTouch = false; // Mudo variável de controle indicando que esta ocorrendo um toque antigo
           if (touchEndX - touchStartX < 0 && playerPositionIndex > 0 && canMove) { // Verifica se há espaço para movimento
             playerPositionIndex--; // Indico que o player moveu uma casa para esquerda
@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour {
             direction = 1; // Indico que a direção é para direita
             isMoving = true; // Digo que o player esta se movendo
           }
-        } else if (touchEndY - touchStartY > 400 && canJump) {
+        } else if (touchEndY - touchStartY > 100 && canJump) {
           isNewTouch = false; // Mudo variável de controle indicando que esta ocorrendo um toque antigo
           jump(); // Executo função para pular
         }
@@ -87,5 +87,12 @@ public class PlayerController : MonoBehaviour {
 
   void jump() {
     animator.SetBool("isJumping", true);
+  }
+
+  void OnCollisionEnter(Collision other) {
+    if (other.collider.CompareTag("Enemy")) {
+
+      Navigate.navigateInScript("EndGame");
+    }
   }
 }
