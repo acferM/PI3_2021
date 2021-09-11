@@ -8,7 +8,8 @@ public class Obstacle : MonoBehaviour {
   void Start() {
     // Chama a função de aumentar a velocidade dos obstáculos após os primeiros 3s e depois a cada 2s
     InvokeRepeating("increaseSpeed", 3, 2);
-    GetComponent<Rigidbody>().velocity = -transform.forward * speed; // Coloca a velocidade para o obstáculo
+
+    GetComponent<Rigidbody>().velocity = transform.up * speed; // Adiciona velocidade ao obstáculo
   }
 
   void increaseSpeed() {

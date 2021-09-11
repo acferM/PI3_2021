@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpawnerController : MonoBehaviour {
   [SerializeField] Transform[] positions = new Transform[3]; // Variavel que guarda possíveis posições de spawn
-  [SerializeField] GameObject Obstacle; // Variavel que guarda prefab do obstáculo
+  [SerializeField] GameObject[] Obstacles; // Variavel que guarda prefab do obstáculo
   [SerializeField] float spawnCooldown; // Variavel que guarda tempo para prox spawn
   float lastSpawn = 0; // Variavel que guarda quando aconteceu o último spawn
   int lastChosen = -1; // Variavel que guarda ultima pista escolhida para spawn
@@ -15,12 +15,14 @@ public class SpawnerController : MonoBehaviour {
     if (Time.time >= lastSpawn + spawnCooldown) {
       Transform position = selectRoad(); // Seleciona uma pista aleatória
 
+      int obstacle = Random.Range(0, Obstacles.Length);
+
       // Cria um objeto do prefab Obstacle na posição da pista selecionada
       Instantiate(
-        Obstacle,
-        new Vector3(position.position.x, transform.position.y, transform.position.z),
-        Quaternion.identity
-      );
+        Obstacles[obstacle],
+        new Vector3(position.position.x + 1.3f, transform.position.y, transform.position.z),
+        Obstacles[obstacle].transform.rotation
+      ); ;
 
       lastSpawn = Time.time; // Atualizo o último spawn
       var discount = Time.deltaTime + 0.03f; // Calculo o disconto do tempo que demora para ter um prox spawn
