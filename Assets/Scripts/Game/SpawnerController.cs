@@ -12,7 +12,7 @@ public class SpawnerController : MonoBehaviour {
 
   void Update() {
     //  Verifica se o tempo atual é maior o igual a ultima vez que ocorreu um spawn + tempo para prox cooldown
-    if (Time.time >= lastSpawn + spawnCooldown) {
+    if (Time.time >= lastSpawn + spawnCooldown / (Obstacle.speed / 100)) {
       Transform position = selectRoad(); // Seleciona uma pista aleatória
 
       int obstacle = Random.Range(0, Obstacles.Length);
@@ -26,7 +26,7 @@ public class SpawnerController : MonoBehaviour {
 
       lastSpawn = Time.time; // Atualizo o último spawn
       var discount = Time.deltaTime + 0.03f; // Calculo o disconto do tempo que demora para ter um prox spawn
-      spawnCooldown = spawnCooldown - discount > 0.4f ? spawnCooldown - discount : spawnCooldown;
+      spawnCooldown = spawnCooldown - discount > 0.3f ? spawnCooldown - discount : spawnCooldown;
       // Digo que o tempo para prox cooldown é seu valor atual - o disconto, isso se o seu valor - o desconto
       // Não for menor que o limite de 0.4s
     }

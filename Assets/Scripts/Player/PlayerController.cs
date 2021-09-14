@@ -88,11 +88,4 @@ public class PlayerController : MonoBehaviour {
   void jump() {
     animator.SetBool("isJumping", true);
   }
-
-  void OnCollisionEnter(Collision other) {
-    if (other.collider.CompareTag("Enemy")) {
-
-      Navigate.navigateInScript("EndGame");
-    }
-  }
 }
